@@ -9,7 +9,7 @@
     min-height: 100vh;
     width: 100%;
     background: rgba(6, 6, 17, 0.39);
-    background: linear-gradient(0deg, #030308a8 100%, rgba(6, 7, 10, 0.63) 100%, rgba(3, 5, 7, 0.65) 100%), url(main.png) no-repeat;
+    background: linear-gradient(0deg, #030308a8 100%, rgba(6, 7, 10, 0.63) 100%, rgba(3, 5, 7, 0.65) 100%), url(main.jpg) no-repeat;
     background-size: cover;
 }
 
