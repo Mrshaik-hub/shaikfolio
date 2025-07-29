@@ -1,53 +1,26 @@
 <?php
+global $conn;
 session_start();
-include ('connectdb.php');
-if(isset($_POST['login_submit'])){
+include('connectdb.php');
+
+if (isset($_POST['login_submit'])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $sql = "SELECT * FROM `logindata` where `username`= '$username' && `password`= '$password'";
-    $result = $conn->query($sql);
 
-    echo $sql;
-    if ($result->num_rows > 0) {
-        $_SESSION['logged_in']='1';
+    // Prevent SQL Injection using Prepared Statements
+    $stmt = $conn->prepare("SELECT * FROM logindata WHERE username = ? AND password = ?");
+    $stmt->bind_param("ss", $username, $password); // s = string
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    if ($result && $result->num_rows > 0) {
+        $_SESSION['logged_in'] = true;
         header('Location: logedin.php');
-    }
-    else{
-        echo "<script>alert('wrong password or username details')</script>";
-
+        exit();
+    } else {
+        echo "<script>alert('Wrong username or password');</script>";
     }
 }
-
-
-
-
-// if ($_SERVER["REQUEST_METHOD"] == "POST" ){
-
-
-//     include ('connectdb.php');
-//     include ('logedin.php');
-
-
-//     session_start();
-
-//     $username = $_POST["username"];
-//     $password = $_POST["password"];
-
-//     $sql = "SELECT * FROM `logindata` where `username`= '$username' && `password`= '$password'";
-//     $result = $conn->query($sql);
-//     if ($result->num_rows > 0) {
-//         $_SESSION['logged_in']='1';
-//         echo "alert('smarty')";
-//         header('Location: logedin.php');
-//     }
-//     else{
-//         echo "<script>alert('hey ur not in')</script>";
-
-//     }
-
-// }
-
 ?>
 
 
